@@ -7,13 +7,7 @@ class RoomsImagesExtension extends Autodesk.Viewing.Extension {
   }
 
   async onModelLoaded(model) {
-    // this.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, async () => {
-    //   this.doorData = await this.getDoorData();
-    // });
     this.doorData = await this.getDoorData();
-    this.viewer.addEventListener(Autodesk.Viewing.CAMERA_TRANSITION_COMPLETED, () => {
-      this.generateRoomsThumbnails.call(this)
-    });
   }
 
   async generateRoomsThumbnails() {
@@ -245,7 +239,7 @@ class RoomsImagesExtension extends Autodesk.Viewing.Extension {
       document.body.removeChild(tag);
       let viewpointsCount = this.viewObjs.length;
       if (viewpointsCount > 0) {
-        this.viewer.fitToView(viewObj.dbId);
+        this.generateRoomsThumbnails.call(this)
       }
       else {
         this.downloadObjectAsJson(this.roomElements, 'RoomsElements');
