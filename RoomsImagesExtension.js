@@ -242,7 +242,19 @@ class RoomsImagesExtension extends Autodesk.Viewing.Extension {
         this.generateRoomsThumbnails.call(this)
       }
       else {
-        this.downloadObjectAsJson(this.roomElements, 'RoomsElements');
+        let propsAAcquired = 0;
+        for (const roomElement of this.roomElements) {
+          this.viewer.model.getBulkProperties2(roomElement.dbIdsinView, { needsExternalId: false, ignoreHidden: true }, results => {
+            roomElement.properties = results;
+            propsAAcquired++;
+            if (this.roomElements.length == propsAAcquired)
+              this.downloadObjectAsJson(this.roomElements, 'RoomsElements');
+          }, error => {
+            console.log(error);
+            if (this.roomElements.length == propsAAcquired)
+              this.downloadObjectAsJson(this.roomElements, 'RoomsElements');
+          });
+        }
       }
     });
   }
