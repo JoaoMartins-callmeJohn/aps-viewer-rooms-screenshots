@@ -226,8 +226,11 @@ class RoomsImagesExtension extends Autodesk.Viewing.Extension {
       name: viewObj.name,
       dbIdsinView: dbIdsinView[0].ids
     })
-    let vw = this.viewer.container.clientWidth;
-    let vh = this.viewer.container.clientHeight;
+    //let vw = this.viewer.container.clientWidth;
+    //let vh = this.viewer.container.clientHeight;
+    //Values for AI model below
+    let vw = 512;
+    let vh = 512;
     this.viewer.getScreenShot(vw, vh, blob => {
       var image = new Image();
       image.src = blob;
